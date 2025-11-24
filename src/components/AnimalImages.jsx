@@ -3,7 +3,7 @@
 import dogImage from '../dog-drinking.png'
 import pandaImage from '../panda-lifting.png'
 import monkeyImage from '../monkey-meditating.png'
-import koalaImage from '../koala-sleeping.png'
+import koalaImage from '/images/koala-durmiendo.png'
 
 export const AnimalImage = ({ type, size = 'w-32 h-32', className = '' }) => {
   // URLs de las imágenes - usa imports para mejor compatibilidad con base path
@@ -47,28 +47,3 @@ export const AnimalImage = ({ type, size = 'w-32 h-32', className = '' }) => {
     </div>
   )
 }
-
-export const KoalaLarge = ({ size = 'w-48 h-48', className = '' }) => {
-  // Imagen de persona alegre celebrando su meta - con fondo blanco para mejor contraste
-  const celebrationUrl = 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&h=500&fit=crop'
-  
-  return (
-    <div className={`${size} flex items-center justify-center relative`}>
-      <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-yellow-200 via-pink-100 to-purple-200 opacity-30"></div>
-      <img 
-        src={celebrationUrl}
-        alt="Persona alegre alcanzando su meta"
-        className={`w-full h-full object-cover drop-shadow-2xl animate-float rounded-2xl relative z-10 ${className}`}
-        style={{ 
-          filter: 'drop-shadow(0 8px 12px rgba(0,0,0,0.4))',
-          animationDuration: '3s'
-        }}
-        onError={(e) => {
-          console.error('Error cargando imagen de celebración')
-          e.target.style.display = 'none'
-        }}
-      />
-    </div>
-  )
-}
-

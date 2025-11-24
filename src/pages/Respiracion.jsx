@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { BreathingExercise } from '../components/BreathingExercise'
-import gatoImage from '/public/images/gato-respirando.png'
+import gatoImage from '/images/gato-respirando.png'
 
 const Respiracion = () => {
   const [selectedTechnique, setSelectedTechnique] = useState('box')

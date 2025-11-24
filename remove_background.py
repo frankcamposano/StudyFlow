@@ -4,6 +4,13 @@ Script para remover completamente el fondo de las imágenes de animales
 Hace transparente todo excepto el animal
 """
 
+#!/usr/bin/env python3
+"""
+Script para remover completamente el fondo de las imágenes de animales
+Hace transparente todo excepto el animal
+"""
+
+import sys
 from PIL import Image
 from pathlib import Path
 import numpy as np
@@ -63,18 +70,24 @@ def remove_all_background(image_path, output_path):
         return False
 
 def main():
-    images_dir = Path('public/images')
-    
-    if not images_dir.exists():
-        print(f"Error: La carpeta {images_dir} no existe")
-        return
-    
-    image_files = sorted(images_dir.glob('*.png'))
-    
+    # Permitir procesar imágenes pasadas como argumentos
+    if len(sys.argv) > 1:
+        image_files = [Path(p) for p in sys.argv[1:] if Path(p).exists() and Path(p).suffix == '.png']
+        if not image_files:
+            print("Error: No se encontraron los archivos PNG especificados.")
+            return
+    else:
+        # Comportamiento por defecto: procesar la carpeta public/images
+        images_dir = Path('public/images')
+        if not images_dir.exists():
+            print(f"Error: La carpeta {images_dir} no existe")
+            return
+        image_files = sorted(images_dir.glob('*.png'))
+
     if not image_files:
-        print(f"No se encontraron archivos PNG en {images_dir}")
+        print(f"No se encontraron archivos PNG para procesar.")
         return
-    
+
     print("=" * 60)
     print("REMOVER FONDO - DEJAR SOLO EL ANIMAL")
     print("=" * 60)

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Piggy from '../components/Piggy'
-import { AnimalImage, KoalaLarge } from '../components/AnimalImages'
+import { AnimalImage } from '../components/AnimalImages'
 
 const Habitos = () => {
   const [habits, setHabits] = useState([
@@ -97,9 +97,9 @@ const Habitos = () => {
   return (
     <div className="space-y-6 page-transition">
       {/* Header */}
-      <div className="flex items-center justify-between animate-fade-in-up relative">
+      <div className="relative flex items-center justify-between animate-fade-in-up">
         <div>
-          <h1 className="text-4xl font-bold text-white mb-2 flex items-center gap-2">
+          <h1 className="flex items-center gap-2 mb-2 text-4xl font-bold text-white">
             Rastreador de Micro-Hábitos
             <Piggy size="text-2xl" animation="bounce" delay={200} />
           </h1>
@@ -109,7 +109,7 @@ const Habitos = () => {
         </div>
         <button 
           onClick={() => setShowAddForm(!showAddForm)}
-          className="bg-pink-500 text-white px-6 py-3 rounded-lg font-semibold flex items-center gap-2 hover:bg-pink-600 transition hover-lift transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl"
+          className="flex items-center gap-2 px-6 py-3 font-semibold text-white transition transform bg-pink-500 rounded-lg shadow-lg hover:bg-pink-600 hover-lift hover:scale-105 active:scale-95 hover:shadow-xl"
         >
           <svg className={`w-5 h-5 transition-transform duration-300 ${showAddForm ? 'rotate-45' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -120,32 +120,32 @@ const Habitos = () => {
 
       {/* Formulario para agregar hábito */}
       {showAddForm && (
-        <div className="bg-gradient-to-br from-purple-700 to-purple-800 rounded-2xl p-6 animate-fade-in-up border-2 border-pink-500 border-opacity-50 shadow-2xl relative">
+        <div className="relative p-6 border-2 border-pink-500 border-opacity-50 shadow-2xl bg-gradient-to-br from-purple-700 to-purple-800 rounded-2xl animate-fade-in-up">
           <div className="absolute top-4 right-4">
             <Piggy size="text-xl" animation="wiggle" delay={300} />
           </div>
-          <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+          <h2 className="flex items-center gap-2 mb-4 text-2xl font-bold text-white">
             <Piggy size="text-2xl" animation="pulse" delay={0} />
             Nuevo Hábito
           </h2>
           <form onSubmit={addHabit} className="space-y-4">
             <div>
-              <label className="block text-white mb-2 font-semibold">Nombre del hábito</label>
+              <label className="block mb-2 font-semibold text-white">Nombre del hábito</label>
               <input
                 type="text"
                 value={newHabit.name}
                 onChange={(e) => setNewHabit({ ...newHabit, name: e.target.value })}
                 placeholder="Ej: Leer, Meditar, Ejercicio..."
-                className="w-full px-4 py-3 rounded-lg bg-white bg-opacity-10 text-white border border-white border-opacity-20 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-all"
+                className="w-full px-4 py-3 text-white transition-all bg-white border border-white rounded-lg bg-opacity-10 border-opacity-20 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500"
                 required
                 autoFocus
               />
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div>
-                <label className="block text-white mb-2 font-semibold">Icono</label>
-                <div className="flex flex-wrap gap-2 max-h-32 overflow-y-auto p-2 bg-white bg-opacity-5 rounded-lg">
+                <label className="block mb-2 font-semibold text-white">Icono</label>
+                <div className="flex flex-wrap gap-2 p-2 overflow-y-auto bg-white rounded-lg max-h-32 bg-opacity-5">
                   {icons.map(icon => (
                     <button
                       key={icon}
@@ -164,7 +164,7 @@ const Habitos = () => {
               </div>
               
               <div>
-                <label className="block text-white mb-2 font-semibold">Color</label>
+                <label className="block mb-2 font-semibold text-white">Color</label>
                 <div className="flex flex-wrap gap-2">
                   {colors.map(color => (
                     <button
@@ -180,25 +180,25 @@ const Habitos = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div>
-                <label className="block text-white mb-2 font-semibold">Meta</label>
+                <label className="block mb-2 font-semibold text-white">Meta</label>
                 <input
                   type="number"
                   value={newHabit.goal}
                   onChange={(e) => setNewHabit({ ...newHabit, goal: parseInt(e.target.value) || 1 })}
                   min="1"
-                  className="w-full px-4 py-3 rounded-lg bg-white bg-opacity-10 text-white border border-white border-opacity-20 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-all"
+                  className="w-full px-4 py-3 text-white transition-all bg-white border border-white rounded-lg bg-opacity-10 border-opacity-20 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500"
                   required
                 />
               </div>
               
               <div>
-                <label className="block text-white mb-2 font-semibold">Unidad</label>
+                <label className="block mb-2 font-semibold text-white">Unidad</label>
                 <select
                   value={newHabit.unit}
                   onChange={(e) => setNewHabit({ ...newHabit, unit: e.target.value })}
-                  className="w-full px-4 py-3 rounded-lg bg-white bg-opacity-10 text-white border border-white border-opacity-20 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-all"
+                  className="w-full px-4 py-3 text-white transition-all bg-white border border-white rounded-lg bg-opacity-10 border-opacity-20 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500"
                 >
                   <option value="veces" className="bg-purple-800">veces</option>
                   <option value="minutos" className="bg-purple-800">minutos</option>
@@ -212,14 +212,14 @@ const Habitos = () => {
             <div className="flex gap-3">
               <button
                 type="submit"
-                className="flex-1 bg-pink-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-pink-600 transition transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl"
+                className="flex-1 px-6 py-3 font-semibold text-white transition transform bg-pink-500 rounded-lg shadow-lg hover:bg-pink-600 hover:scale-105 active:scale-95 hover:shadow-xl"
               >
                 Agregar ✨
               </button>
               <button
                 type="button"
                 onClick={() => setShowAddForm(false)}
-                className="flex-1 bg-white bg-opacity-10 text-white px-6 py-3 rounded-lg font-semibold hover:bg-opacity-20 transition transform hover:scale-105 active:scale-95"
+                className="flex-1 px-6 py-3 font-semibold text-white transition transform bg-white rounded-lg bg-opacity-10 hover:bg-opacity-20 hover:scale-105 active:scale-95"
               >
                 Cancelar
               </button>
@@ -229,7 +229,7 @@ const Habitos = () => {
       )}
 
       {/* Grid de Hábitos */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {habits.map((habit, index) => {
           const percentage = Math.min(100, (habit.current / habit.goal) * 100)
           const delay = index * 100 // 0ms, 100ms, 200ms, 300ms
@@ -245,14 +245,14 @@ const Habitos = () => {
             >
               <button
                 onClick={() => deleteHabit(habit.id)}
-                className="absolute top-4 right-4 text-white opacity-70 hover:opacity-100 transition transform hover:scale-125 active:scale-95 hover:rotate-90"
+                className="absolute text-white transition transform top-4 right-4 opacity-70 hover:opacity-100 hover:scale-125 active:scale-95 hover:rotate-90"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                 </svg>
               </button>
 
-              <div className="mb-4 flex items-center justify-center transform hover:scale-110 transition-transform duration-300 cursor-default">
+              <div className="flex items-center justify-center mb-4 transition-transform duration-300 transform cursor-default hover:scale-110">
                 {['dog', 'panda', 'monkey', 'koala'].includes(habit.icon) && (
                   <AnimalImage type={habit.icon} size="w-40 h-40" />
                 )}
@@ -260,8 +260,8 @@ const Habitos = () => {
                   <span className="text-4xl">{habit.icon}</span>
                 )}
               </div>
-              <h3 className="text-2xl font-bold mb-2">{habit.name}</h3>
-              <p className="text-white opacity-90 mb-4">Meta: {habit.goal} {habit.unit}</p>
+              <h3 className="mb-2 text-2xl font-bold">{habit.name}</h3>
+              <p className="mb-4 text-white opacity-90">Meta: {habit.goal} {habit.unit}</p>
               
               <div className="mb-4">
                 <div className="flex items-center justify-between mb-2">
@@ -272,7 +272,7 @@ const Habitos = () => {
                     {Math.round(percentage)}%
                   </span>
                 </div>
-                <div className="w-full bg-white bg-opacity-30 rounded-full h-3 overflow-hidden">
+                <div className="w-full h-3 overflow-hidden bg-white rounded-full bg-opacity-30">
                   <div
                     className={`bg-white rounded-full h-3 transition-all duration-500 ease-out ${
                       percentage === 100 ? 'bg-gradient-to-r from-yellow-300 to-yellow-500' : ''
@@ -281,7 +281,7 @@ const Habitos = () => {
                   />
                 </div>
                 {percentage === 100 && (
-                  <div className="text-center mt-2 text-yellow-300 font-bold animate-bounce">
+                  <div className="mt-2 font-bold text-center text-yellow-300 animate-bounce">
                     ¡Meta alcanzada! 🎉
                   </div>
                 )}
@@ -290,7 +290,7 @@ const Habitos = () => {
               <div className="flex gap-3">
                 <button
                   onClick={() => updateHabit(habit.id, -1)}
-                  className="flex-1 bg-white bg-opacity-20 hover:bg-red-500 hover:bg-opacity-50 rounded-lg py-3 flex items-center justify-center transition transform hover:scale-110 active:scale-95"
+                  className="flex items-center justify-center flex-1 py-3 transition transform bg-white rounded-lg bg-opacity-20 hover:bg-red-500 hover:bg-opacity-50 hover:scale-110 active:scale-95"
                 >
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
@@ -298,7 +298,7 @@ const Habitos = () => {
                 </button>
                 <button
                   onClick={() => updateHabit(habit.id, 1)}
-                  className="flex-1 bg-white bg-opacity-20 hover:bg-green-500 hover:bg-opacity-50 rounded-lg py-3 flex items-center justify-center transition transform hover:scale-110 active:scale-95"
+                  className="flex items-center justify-center flex-1 py-3 transition transform bg-white rounded-lg bg-opacity-20 hover:bg-green-500 hover:bg-opacity-50 hover:scale-110 active:scale-95"
                 >
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -311,22 +311,22 @@ const Habitos = () => {
       </div>
 
       {/* Mensaje Motivacional */}
-      <div className="bg-gradient-to-br from-purple-700 to-purple-800 rounded-2xl p-8 text-center hover-lift animate-fade-in-up relative" style={{ animationDelay: '400ms', opacity: 0 }}>
+      <div className="relative p-8 text-center bg-gradient-to-br from-purple-700 to-purple-800 rounded-2xl hover-lift animate-fade-in-up" style={{ animationDelay: '400ms', opacity: 0 }}>
         <div className="absolute top-4 right-4">
           <Piggy size="text-2xl" animation="float" delay={600} />
         </div>
-        <div className="flex justify-center mb-4 relative">
+        <div className="relative flex justify-center mb-4">
           <div className="flex items-center justify-center">
-            <KoalaLarge size="w-56 h-56" />
+            <AnimalImage type="koala" size="w-56 h-56" />
           </div>
           <div className="absolute -top-2 -right-2">
             <Piggy size="text-3xl" animation="bounce" delay={800} />
           </div>
         </div>
-        <h3 className="text-2xl font-bold text-white mb-2">
+        <h3 className="mb-2 text-2xl font-bold text-white">
           ¡Sigue con el Gran Trabajo! ✨
         </h3>
-        <p className="text-white opacity-90 text-lg">
+        <p className="text-lg text-white opacity-90">
           Cada pequeña acción cuenta. ¡Estás construyendo una mejor versión de ti mismo, un hábito a la vez!
         </p>
       </div>
@@ -335,4 +335,3 @@ const Habitos = () => {
 }
 
 export default Habitos
-
