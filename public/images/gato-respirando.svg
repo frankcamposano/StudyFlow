@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Cuerpo -->
+  <ellipse cx="100" cy="130" rx="45" ry="55" fill="#FFB84D" stroke="#333" stroke-width="2"/>
+  
+  <!-- Cabeza -->
+  <circle cx="100" cy="70" r="35" fill="#FFB84D" stroke="#333" stroke-width="2"/>
+  
+  <!-- Orejas -->
+  <polygon points="75,40 65,10 85,35" fill="#FFB84D" stroke="#333" stroke-width="2"/>
+  <polygon points="125,40 135,10 115,35" fill="#FFB84D" stroke="#333" stroke-width="2"/>
+  
+  <!-- Interior orejas -->
+  <polygon points="75,38 70,18 80,35" fill="#FFC966" stroke="none"/>
+  <polygon points="125,38 130,18 120,35" fill="#FFC966" stroke="none"/>
+  
+  <!-- Ojos -->
+  <circle cx="85" cy="65" r="6" fill="#333"/>
+  <circle cx="115" cy="65" r="6" fill="#333"/>
+  
+  <!-- Brillo en ojos -->
+  <circle cx="86" cy="64" r="2" fill="white"/>
+  <circle cx="116" cy="64" r="2" fill="white"/>
+  
+  <!-- Nariz -->
+  <polygon points="100,78 97,85 103,85" fill="#FF69B4"/>
+  
+  <!-- Boca -->
+  <path d="M 100 85 Q 95 90 90 88" stroke="#333" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M 100 85 Q 105 90 110 88" stroke="#333" stroke-width="2" fill="none" stroke-linecap="round"/>
+  
+  <!-- Bigotes -->
+  <line x1="70" y1="75" x2="50" y2="72" stroke="#333" stroke-width="1.5"/>
+  <line x1="70" y1="80" x2="50" y2="85" stroke="#333" stroke-width="1.5"/>
+  <line x1="130" y1="75" x2="150" y2="72" stroke="#333" stroke-width="1.5"/>
+  <line x1="130" y1="80" x2="150" y2="85" stroke="#333" stroke-width="1.5"/>
+  
+  <!-- Patas delanteras -->
+  <rect x="75" y="170" width="15" height="25" rx="7" fill="#FFB84D" stroke="#333" stroke-width="2"/>
+  <rect x="110" y="170" width="15" height="25" rx="7" fill="#FFB84D" stroke="#333" stroke-width="2"/>
+  
+  <!-- Cola curva -->
+  <path d="M 140 120 Q 160 100 155 70" stroke="#FFB84D" stroke-width="18" fill="none" stroke-linecap="round"/>
+  
+  <!-- Indicador de respiración - círculos animados -->
+  <circle cx="100" cy="130" r="50" fill="none" stroke="rgba(255,182,77,0.3)" stroke-width="2" opacity="0.5"/>
+</svg>
