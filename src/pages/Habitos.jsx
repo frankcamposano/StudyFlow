@@ -290,7 +290,7 @@ const Habitos = () => {
               <div className="flex gap-3">
                 <button
                   onClick={() => updateHabit(habit.id, -1)}
-                  className="flex-1 bg-white bg-opacity-20 hover:bg-opacity-30 rounded-lg py-3 flex items-center justify-center transition transform hover:scale-110 active:scale-95 hover:bg-red-500 hover:bg-opacity-50"
+                  className="flex-1 bg-white bg-opacity-20 hover:bg-red-500 hover:bg-opacity-50 rounded-lg py-3 flex items-center justify-center transition transform hover:scale-110 active:scale-95"
                 >
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
@@ -298,7 +298,7 @@ const Habitos = () => {
                 </button>
                 <button
                   onClick={() => updateHabit(habit.id, 1)}
-                  className="flex-1 bg-white bg-opacity-20 hover:bg-opacity-30 rounded-lg py-3 flex items-center justify-center transition transform hover:scale-110 active:scale-95 hover:bg-green-500 hover:bg-opacity-50"
+                  className="flex-1 bg-white bg-opacity-20 hover:bg-green-500 hover:bg-opacity-50 rounded-lg py-3 flex items-center justify-center transition transform hover:scale-110 active:scale-95"
                 >
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />

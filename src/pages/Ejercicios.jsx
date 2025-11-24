@@ -158,37 +158,37 @@ const Ejercicios = () => {
       {/* Header */}
       <div className="flex items-center justify-between animate-fade-in-up">
         <div>
-          <h1 className="text-4xl font-bold text-white mb-2">💪 Ejercicios para el Físico</h1>
+          <h1 className="mb-2 text-4xl font-bold text-white">💪 Ejercicios para el Físico</h1>
           <p className="text-white opacity-80">Rutinas de YouTube para mejorar tu cuerpo</p>
         </div>
         <div className="text-6xl animate-bounce-animal">🏋️</div>
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl p-6 text-white hover-lift card-glow animate-scale-in" style={{ animationDelay: '0.1s', opacity: 0 }}>
-          <div className="text-4xl mb-2">🏋️</div>
-          <div className="text-4xl font-bold mb-1">{exercises[selectedCategory].length}</div>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
+        <div className="p-6 text-white bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl hover-lift card-glow animate-scale-in" style={{ animationDelay: '0.1s', opacity: 0 }}>
+          <div className="mb-2 text-4xl">🏋️</div>
+          <div className="mb-1 text-4xl font-bold">{exercises[selectedCategory].length}</div>
           <div className="text-lg">Ejercicios</div>
         </div>
 
-        <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-2xl p-6 text-white hover-lift card-glow animate-scale-in" style={{ animationDelay: '0.2s', opacity: 0 }}>
-          <div className="text-4xl mb-2">✓</div>
-          <div className="text-4xl font-bold mb-1">{completedExercises.length}</div>
+        <div className="p-6 text-white bg-gradient-to-br from-green-500 to-green-600 rounded-2xl hover-lift card-glow animate-scale-in" style={{ animationDelay: '0.2s', opacity: 0 }}>
+          <div className="mb-2 text-4xl">✓</div>
+          <div className="mb-1 text-4xl font-bold">{completedExercises.length}</div>
           <div className="text-lg">Completados</div>
         </div>
 
-        <div className="bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl p-6 text-white hover-lift card-glow animate-scale-in" style={{ animationDelay: '0.3s', opacity: 0 }}>
-          <div className="text-4xl mb-2">⏱️</div>
-          <div className="text-4xl font-bold mb-1">
+        <div className="p-6 text-white bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl hover-lift card-glow animate-scale-in" style={{ animationDelay: '0.3s', opacity: 0 }}>
+          <div className="mb-2 text-4xl">⏱️</div>
+          <div className="mb-1 text-4xl font-bold">
             {exercises[selectedCategory].reduce((acc, ex) => acc + ex.duration, 0)}
           </div>
           <div className="text-lg">Minutos totales</div>
         </div>
 
-        <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl p-6 text-white hover-lift card-glow animate-scale-in" style={{ animationDelay: '0.4s', opacity: 0 }}>
-          <div className="text-4xl mb-2">🔥</div>
-          <div className="text-4xl font-bold mb-1">
+        <div className="p-6 text-white bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl hover-lift card-glow animate-scale-in" style={{ animationDelay: '0.4s', opacity: 0 }}>
+          <div className="mb-2 text-4xl">🔥</div>
+          <div className="mb-1 text-4xl font-bold">
             {exercises[selectedCategory].reduce((acc, ex) => acc + ex.calories, 0)}
           </div>
           <div className="text-lg">Calorías quemadas</div>
@@ -200,7 +200,7 @@ const Ejercicios = () => {
         <h2 className="text-2xl font-bold text-white animate-fade-in-up" style={{ animationDelay: '0.5s', opacity: 0 }}>
           Elige tu Categoría
         </h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
           {categories.map((cat, idx) => (
             <button
               key={cat.id}
@@ -215,7 +215,7 @@ const Ejercicios = () => {
               } text-white font-bold text-lg`}
               style={{ animationDelay: `${0.5 + idx * 0.1}s`, opacity: 0 }}
             >
-              <div className="text-4xl mb-2">{cat.emoji}</div>
+              <div className="mb-2 text-4xl">{cat.emoji}</div>
               <div className="text-sm">{cat.name}</div>
             </button>
           ))}
@@ -227,7 +227,7 @@ const Ejercicios = () => {
         <h2 className="text-2xl font-bold text-white animate-fade-in-up" style={{ animationDelay: '0.7s', opacity: 0 }}>
           Rutinas Disponibles
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {exercises[selectedCategory].map((exercise, idx) => (
             <div
               key={exercise.id}
@@ -242,35 +242,35 @@ const Ejercicios = () => {
               <div className="p-6 text-white">
                 {/* Checkbox completado */}
                 {isCompleted(exercise.id) && (
-                  <div className="absolute top-4 right-4 bg-green-400 rounded-full w-8 h-8 flex items-center justify-center text-white font-bold">
+                  <div className="absolute flex items-center justify-center w-8 h-8 font-bold text-white bg-green-400 rounded-full top-4 right-4">
                     ✓
                   </div>
                 )}
 
                 {/* Contenido */}
-                <h3 className="text-xl font-bold mb-3">{exercise.name}</h3>
-                <p className="text-sm opacity-80 mb-4">{exercise.description}</p>
+                <h3 className="mb-3 text-xl font-bold">{exercise.name}</h3>
+                <p className="mb-4 text-sm opacity-80">{exercise.description}</p>
 
                 {/* Stats */}
                 <div className="grid grid-cols-3 gap-2 mb-4">
-                  <div className="bg-white bg-opacity-10 rounded-lg p-2 text-center">
+                  <div className="p-2 text-center bg-white rounded-lg bg-opacity-10">
                     <div className="text-xs opacity-70">Duración</div>
                     <div className="font-bold">{exercise.duration}m</div>
                   </div>
-                  <div className="bg-white bg-opacity-10 rounded-lg p-2 text-center">
+                  <div className="p-2 text-center bg-white rounded-lg bg-opacity-10">
                     <div className="text-xs opacity-70">Dificultad</div>
-                    <div className="font-bold text-xs">{exercise.difficulty}</div>
+                    <div className="text-xs font-bold">{exercise.difficulty}</div>
                   </div>
-                  <div className="bg-white bg-opacity-10 rounded-lg p-2 text-center">
+                  <div className="p-2 text-center bg-white rounded-lg bg-opacity-10">
                     <div className="text-xs opacity-70">Calorías</div>
                     <div className="font-bold">{exercise.calories}</div>
                   </div>
                 </div>
 
                 {/* Beneficios */}
-                <div className="space-y-1 mb-4">
+                <div className="mb-4 space-y-1">
                   {exercise.benefits.map((benefit, i) => (
-                    <div key={i} className="text-xs opacity-80 flex items-center gap-2">
+                    <div key={i} className="flex items-center gap-2 text-xs opacity-80">
                       <span className="text-green-400">•</span> {benefit}
                     </div>
                   ))}
@@ -283,7 +283,7 @@ const Ejercicios = () => {
                       e.stopPropagation()
                       setSelectedExercise(exercise)
                     }}
-                    className="flex-1 bg-white text-purple-700 font-bold py-2 rounded-lg hover:bg-opacity-90 transition transform hover:scale-105 active:scale-95"
+                    className="flex-1 py-2 font-bold text-purple-700 transition transform bg-white rounded-lg hover:bg-opacity-90 hover:scale-105 active:scale-95"
                   >
                     👁️ Ver Video
                   </button>
@@ -309,21 +309,21 @@ const Ejercicios = () => {
 
       {/* Modal de Video */}
       {selectedExercise && (
-        <div className="fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center p-4 animate-fade-in">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-70 animate-fade-in">
           <div className="bg-gradient-to-br from-purple-700 to-purple-800 rounded-3xl p-8 max-w-2xl w-full border border-white border-opacity-20 max-h-[90vh] overflow-y-auto">
             {/* Header */}
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-3xl font-bold text-white">{selectedExercise.name}</h2>
               <button
                 onClick={() => setSelectedExercise(null)}
-                className="text-white text-3xl hover:opacity-60 transition"
+                className="text-3xl text-white transition hover:opacity-60"
               >
                 ✕
               </button>
             </div>
 
             {/* Video */}
-            <div className="mb-6 rounded-2xl overflow-hidden bg-black">
+            <div className="mb-6 overflow-hidden bg-black rounded-2xl">
               <iframe
                 width="100%"
                 height="400"
@@ -336,32 +336,32 @@ const Ejercicios = () => {
             </div>
 
             {/* Información */}
-            <div className="bg-white bg-opacity-10 rounded-2xl p-6 mb-6 space-y-4">
-              <p className="text-white text-lg">{selectedExercise.description}</p>
+            <div className="p-6 mb-6 space-y-4 bg-white bg-opacity-10 rounded-2xl">
+              <p className="text-lg text-white">{selectedExercise.description}</p>
 
               <div className="grid grid-cols-3 gap-4">
-                <div className="bg-white bg-opacity-10 rounded-lg p-4 text-center">
-                  <div className="text-4xl mb-2">⏱️</div>
-                  <div className="text-white font-bold text-xl">{selectedExercise.duration} min</div>
-                  <div className="text-white opacity-70 text-sm">Duración</div>
+                <div className="p-4 text-center bg-white rounded-lg bg-opacity-10">
+                  <div className="mb-2 text-4xl">⏱️</div>
+                  <div className="text-xl font-bold text-white">{selectedExercise.duration} min</div>
+                  <div className="text-sm text-white opacity-70">Duración</div>
                 </div>
-                <div className="bg-white bg-opacity-10 rounded-lg p-4 text-center">
-                  <div className="text-4xl mb-2">📊</div>
-                  <div className="text-white font-bold text-xl">{selectedExercise.difficulty}</div>
-                  <div className="text-white opacity-70 text-sm">Dificultad</div>
+                <div className="p-4 text-center bg-white rounded-lg bg-opacity-10">
+                  <div className="mb-2 text-4xl">📊</div>
+                  <div className="text-xl font-bold text-white">{selectedExercise.difficulty}</div>
+                  <div className="text-sm text-white opacity-70">Dificultad</div>
                 </div>
-                <div className="bg-white bg-opacity-10 rounded-lg p-4 text-center">
-                  <div className="text-4xl mb-2">🔥</div>
-                  <div className="text-white font-bold text-xl">{selectedExercise.calories} cal</div>
-                  <div className="text-white opacity-70 text-sm">Calorías</div>
+                <div className="p-4 text-center bg-white rounded-lg bg-opacity-10">
+                  <div className="mb-2 text-4xl">🔥</div>
+                  <div className="text-xl font-bold text-white">{selectedExercise.calories} cal</div>
+                  <div className="text-sm text-white opacity-70">Calorías</div>
                 </div>
               </div>
 
               <div>
-                <div className="text-white font-bold mb-3">✨ Beneficios:</div>
+                <div className="mb-3 font-bold text-white">✨ Beneficios:</div>
                 <div className="space-y-2">
                   {selectedExercise.benefits.map((benefit, i) => (
-                    <div key={i} className="text-white opacity-90 flex items-center gap-2 text-lg">
+                    <div key={i} className="flex items-center gap-2 text-lg text-white opacity-90">
                       <span className="text-green-400">✓</span> {benefit}
                     </div>
                   ))}
@@ -386,7 +386,7 @@ const Ejercicios = () => {
               </button>
               <button
                 onClick={() => setSelectedExercise(null)}
-                className="flex-1 py-4 rounded-xl font-bold text-lg bg-white text-purple-700 hover:bg-opacity-90 transition transform hover:scale-105 active:scale-95"
+                className="flex-1 py-4 text-lg font-bold text-purple-700 transition transform bg-white rounded-xl hover:bg-opacity-90 hover:scale-105 active:scale-95"
               >
                 Cerrar
               </button>

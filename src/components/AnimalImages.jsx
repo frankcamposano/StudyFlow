@@ -1,13 +1,17 @@
 // Componente para mostrar las imágenes de animales reales
-// Las imágenes se cargan desde la carpeta public/images con fondo transparente
+// Las imágenes se cargan desde la carpeta src con fondo transparente
+import dogImage from '../dog-drinking.png'
+import pandaImage from '../panda-lifting.png'
+import monkeyImage from '../monkey-meditating.png'
+import koalaImage from '../koala-sleeping.png'
 
 export const AnimalImage = ({ type, size = 'w-32 h-32', className = '' }) => {
-  // URLs de las imágenes - apunta a las imágenes en public/images
+  // URLs de las imágenes - usa imports para mejor compatibilidad con base path
   const imageUrls = {
-    dog: '/images/dog-drinking.png', 
-    panda: '/images/panda-lifting.png', 
-    monkey: '/images/monkey-meditating.png', 
-    koala: '/images/koala-sleeping.png' 
+    dog: dogImage, 
+    panda: pandaImage, 
+    monkey: monkeyImage, 
+    koala: koalaImage
   }
 
   const altTexts = {

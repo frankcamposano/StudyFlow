@@ -46,7 +46,7 @@ const AppRoutes = () => {
 function App() {
   return (
     <AuthProvider>
-      <Router>
+      <Router basename="/StudyFlow/">
         <AppRoutes />
         <NotificationCenter />
       </Router>
