@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import Piggy from './Piggy'
+import NotificationCenter from './NotificationCenter'
 import { 
   SparklesIcon, 
   CalendarIcon, 
@@ -37,6 +38,7 @@ const Layout = ({ children }) => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-black to-indigo-900 bg-[length:200%_200%] animate-gradient-pan">
+      <NotificationCenter />
       <header className="flex items-center justify-between px-8 py-4">
         <div className="flex items-center gap-2">
           <div className="relative flex items-center justify-center w-8 h-8 bg-pink-500 rounded-lg">

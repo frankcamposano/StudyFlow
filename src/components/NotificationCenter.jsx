@@ -58,6 +58,34 @@ export default function NotificationCenter() {
       message: '📋 ¿Ya completaste tus hábitos del día?', 
       icon: '📋',
       type: 'habits'
+    },
+    {
+      id: 'active_break',
+      time: '10:00',
+      message: '🤸‍♀️ Estira las piernas y la espalda. ¡Una pausa activa te llenará de energía!',
+      icon: '🤸‍♀️',
+      type: 'break'
+    },
+    {
+      id: 'lunch',
+      time: '13:00',
+      message: '🥗 Es hora de almorzar. Elige alimentos que te den energía para la tarde.',
+      icon: '🥗',
+      type: 'health'
+    },
+    {
+      id: 'posture',
+      time: '16:00',
+      message: '🧘‍♂️ Revisa tu postura. Una espalda recta mejora la concentración.',
+      icon: '🧘‍♂️',
+      type: 'health'
+    },
+    {
+      id: 'journal',
+      time: '20:00',
+      message: '📔 ¿Qué tal tu día? Anota tus pensamientos y logros en el diario.',
+      icon: '📔',
+      type: 'journal'
     }
   ]
 
@@ -87,18 +115,27 @@ export default function NotificationCenter() {
 
   useEffect(() => {
     if (user) {
-      addNotification(`¡Bienvenido de nuevo, ${user}! 😃`, '👋')
+      // Para demostración, ciclar a través de las notificaciones
+      let index = 0
+      const cycleNotifications = () => {
+        const notification = availableNotifications[index]
+        addNotification(notification.message, notification.icon)
+        index = (index + 1) % availableNotifications.length
+      }
+
+      // Mostrar la primera inmediatamente
+      cycleNotifications()
+
+      // Cambiar cada 5 segundos
+      const intervalId = setInterval(cycleNotifications, 5000)
+
+      return () => clearInterval(intervalId) // Limpiar al desmontar
     }
   }, [user])
 
   const addNotification = (message, icon = '📢') => {
     const id = Date.now()
-    setNotifications(prev => [...prev, { id, message, icon }])
-
-    // Remover notificación después de 6 segundos
-    setTimeout(() => {
-      setNotifications(prev => prev.filter(n => n.id !== id))
-    }, 6000)
+    setNotifications([{ id, message, icon }])
   }
 
   const removeNotification = (id) => {
@@ -108,7 +145,7 @@ export default function NotificationCenter() {
   return (
     <div>
       {/* Panel de notificaciones */}
-      <div className="fixed z-50 flex flex-col items-center w-full max-w-md space-y-3 -translate-x-1/2 top-8 left-1/2">
+      <div className="fixed z-50 flex flex-col items-end max-w-md space-y-3 bottom-8 right-8">
         {/* Notificaciones activas */}
         {notifications.map(notif => (
           <div

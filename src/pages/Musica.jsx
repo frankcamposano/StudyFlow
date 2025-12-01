@@ -8,11 +8,11 @@ const Musica = () => {
   const rockBallads = [
     { id: '1w7OgIMMRc4', title: 'November Rain', artist: 'Guns N\' Roses', duration: '8:57', mood: 'Épica' },
     { id: 'Rbm6GXllBiw', title: 'I Don\'t Want to Miss a Thing', artist: 'Aerosmith', duration: '4:58', mood: 'Romántica' },
-    { id: 'Q3Yc3HhSl1Q', title: 'Always', artist: 'Bon Jovi', duration: '5:52', mood: 'Emotiva' },
+    { id: 'Q3Yc3HhSl1Q', title: 'Nothing Else Matters', artist: 'Metallica', duration: '5:52', mood: 'Emotiva' },
     { id: 'v2AC41dglnM', title: 'Wind of Change', artist: 'Scorpions', duration: '5:12', mood: 'Nostálgica' },
   
     { id: 'fJ9rUzIMcZQ', title: 'Open Arms', artist: 'Journey', duration: '3:20', mood: 'Clásica' },
-    { id: '9BMwcO6_hyA', title: 'Nothing Else Matters', artist: 'Metallica', duration: '6:28', mood: 'Intensa' },
+    { id: '9BMwcO6_hyA', title: 'Always', artist: 'Bon Jovi', duration: '6:28', mood: 'Intensa' },
     { id: 'tkBVDh7my9Q', title: 'Wonderful Tonight', artist: 'Eric Clapton', duration: '3:43', mood: 'Romántica' },
     { id: 'GlPlfCy1urI', title: 'Dream On', artist: 'Aerosmith', duration: '4:27', mood: 'Épica' },
    

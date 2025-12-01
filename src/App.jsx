@@ -1,7 +1,6 @@
 import { Outlet } from 'react-router-dom'
 import { ErrorBoundary } from 'react-error-boundary'
 import { AuthProvider } from './context/AuthContext'
-import NotificationCenter from './components/NotificationCenter'
 import { ErrorBoundaryFallback } from './components/ErrorBoundaryFallback'
 import Tour from './components/Tour'
 import { useState } from 'react'
@@ -24,7 +23,6 @@ function App() {
         <Tour run={runTour} steps={tourSteps} />
         <Outlet context={{ setRunTour, setTourSteps }} />
       </ErrorBoundary>
-      <NotificationCenter />
     </AuthProvider>
   )
 }
