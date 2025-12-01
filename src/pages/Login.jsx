@@ -1,8 +1,11 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
+import monkey from '../monkey-meditating.png'
 
-const Login = ({ onLogin }) => {
+const Login = () => {
   const navigate = useNavigate()
+  const { login } = useAuth()
   const [formData, setFormData] = useState({
     username: '',
     password: ''
@@ -27,7 +30,7 @@ const Login = ({ onLogin }) => {
     setTimeout(() => {
       setIsLoading(false)
       if (formData.username && formData.password) {
-        onLogin(formData.username)
+        login(formData.username)
         navigate('/')
       } else {
         setError('Credenciales inválidas')
@@ -36,11 +39,11 @@ const Login = ({ onLogin }) => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-pink-800 to-purple-900 flex items-center justify-center p-4 relative overflow-hidden">
+    <div className="relative flex items-center justify-center min-h-screen p-4 overflow-hidden bg-gradient-to-br from-cyan-900 via-sky-800 to-cyan-900">
       {/* Fondo animado con gradientes */}
       <div className="absolute inset-0">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+        <div className="absolute top-0 right-0 bg-sky-500 rounded-full w-96 h-96 mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+        <div className="absolute bottom-0 left-0 bg-cyan-500 rounded-full w-96 h-96 mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
       </div>
 
       {/* Partículas de fondo animadas */}
@@ -48,7 +51,7 @@ const Login = ({ onLogin }) => {
         {[...Array(15)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-2 h-2 bg-gradient-to-r from-pink-400 to-purple-400 rounded-full opacity-40"
+            className="absolute w-2 h-2 rounded-full bg-gradient-to-r from-pink-400 to-purple-400 opacity-40"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
@@ -60,64 +63,64 @@ const Login = ({ onLogin }) => {
       </div>
 
       {/* Animales flotantes decorativos */}
-      <div className="absolute top-10 left-5 md:left-20 text-5xl md:text-6xl animate-bounce" style={{ animationDuration: '3s' }}>
-        🐷
+      <div className="absolute w-24 h-24 top-10 left-5 md:left-20 animate-bounce" style={{ animationDuration: '3s' }}>
+        <img src={monkey} alt="Monkey" />
       </div>
-      <div className="absolute bottom-10 right-5 md:right-20 text-4xl md:text-5xl animate-bounce" style={{ animationDuration: '2.5s', animationDelay: '0.5s' }}>
-        🐷
+      <div className="absolute w-16 h-16 bottom-10 right-5 md:right-20 animate-bounce" style={{ animationDuration: '2.5s', animationDelay: '0.5s' }}>
+        <img src={monkey} alt="Monkey" />
       </div>
-      <div className="absolute top-1/3 right-5 md:right-10 text-3xl md:text-4xl animate-float" style={{ animationDuration: '4s', animationDelay: '1s' }}>
+      <div className="absolute text-3xl top-1/3 right-5 md:right-10 md:text-4xl animate-float" style={{ animationDuration: '4s', animationDelay: '1s' }}>
         ✨
       </div>
 
       {/* Contenedor principal con dos secciones */}
-      <div className="w-full max-w-6xl grid md:grid-cols-2 gap-8 relative z-10">
+      <div className="relative z-10 grid w-full max-w-6xl gap-8 md:grid-cols-2">
         {/* Sección izquierda - Información */}
-        <div className="hidden md:flex flex-col justify-center space-y-8 animate-fade-in-up">
+        <div className="flex-col justify-center hidden space-y-8 md:flex animate-fade-in-up">
           <div>
-            <h2 className="text-5xl font-bold text-white mb-4">
+            <h2 className="mb-4 text-5xl font-bold text-white">
               Bienvenido a
               <br />
-              <span className="bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">
-                StudyFlow
+              <span className="text-transparent bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text">
+                Mi Ritual
               </span>
             </h2>
-            <p className="text-xl text-white opacity-90 leading-relaxed">
+            <p className="text-xl leading-relaxed text-white opacity-90">
               Tu compañero perfecto para mantener el enfoque, construir hábitos y alcanzar tus metas.
             </p>
           </div>
 
           {/* Características */}
           <div className="space-y-4">
-            <div className="flex items-start gap-4 bg-white bg-opacity-5 backdrop-blur p-4 rounded-2xl hover:bg-opacity-10 transition-all">
+            <div className="flex items-start gap-4 p-4 transition-all bg-white bg-opacity-5 backdrop-blur rounded-2xl hover:bg-opacity-10">
               <div className="text-3xl">📅</div>
               <div>
-                <h3 className="text-white font-bold mb-1">Agenda Inteligente</h3>
-                <p className="text-white opacity-70 text-sm">Organiza tu día de manera efectiva</p>
+                <h3 className="mb-1 font-bold text-white">Agenda Inteligente</h3>
+                <p className="text-sm text-white opacity-70">Organiza tu día de manera efectiva</p>
               </div>
             </div>
 
-            <div className="flex items-start gap-4 bg-white bg-opacity-5 backdrop-blur p-4 rounded-2xl hover:bg-opacity-10 transition-all">
+            <div className="flex items-start gap-4 p-4 transition-all bg-white bg-opacity-5 backdrop-blur rounded-2xl hover:bg-opacity-10">
               <div className="text-3xl">🫁</div>
               <div>
-                <h3 className="text-white font-bold mb-1">Respiración Consciente</h3>
-                <p className="text-white opacity-70 text-sm">Reduce estrés con técnicas guiadas</p>
+                <h3 className="mb-1 font-bold text-white">Respiración Consciente</h3>
+                <p className="text-sm text-white opacity-70">Reduce estrés con técnicas guiadas</p>
               </div>
             </div>
 
-            <div className="flex items-start gap-4 bg-white bg-opacity-5 backdrop-blur p-4 rounded-2xl hover:bg-opacity-10 transition-all">
+            <div className="flex items-start gap-4 p-4 transition-all bg-white bg-opacity-5 backdrop-blur rounded-2xl hover:bg-opacity-10">
               <div className="text-3xl">🏆</div>
               <div>
-                <h3 className="text-white font-bold mb-1">Logros y Badges</h3>
-                <p className="text-white opacity-70 text-sm">Celebra cada pequeña victoria</p>
+                <h3 className="mb-1 font-bold text-white">Logros y Badges</h3>
+                <p className="text-sm text-white opacity-70">Celebra cada pequeña victoria</p>
               </div>
             </div>
 
-            <div className="flex items-start gap-4 bg-white bg-opacity-5 backdrop-blur p-4 rounded-2xl hover:bg-opacity-10 transition-all">
+            <div className="flex items-start gap-4 p-4 transition-all bg-white bg-opacity-5 backdrop-blur rounded-2xl hover:bg-opacity-10">
               <div className="text-3xl">🎯</div>
               <div>
-                <h3 className="text-white font-bold mb-1">Micro-Hábitos</h3>
-                <p className="text-white opacity-70 text-sm">Cambios pequeños, resultados grandes</p>
+                <h3 className="mb-1 font-bold text-white">Micro-Hábitos</h3>
+                <p className="text-sm text-white opacity-70">Cambios pequeños, resultados grandes</p>
               </div>
             </div>
           </div>
@@ -125,24 +128,24 @@ const Login = ({ onLogin }) => {
 
         {/* Sección derecha - Login */}
         <div className="w-full animate-fade-in-up" style={{ animationDelay: '0.1s', opacity: 0 }}>
-          <div className="bg-white bg-opacity-10 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-white border-opacity-20 relative overflow-hidden">
+          <div className="relative p-8 overflow-hidden bg-white border border-white shadow-2xl bg-opacity-10 backdrop-blur-xl rounded-3xl border-opacity-20">
             {/* Brillo de fondo */}
-            <div className="absolute -top-40 -right-40 w-80 h-80 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+            <div className="absolute bg-pink-500 rounded-full -top-40 -right-40 w-80 h-80 mix-blend-multiply filter blur-3xl opacity-20"></div>
 
             <div className="relative z-10">
               {/* Logo y título */}
-              <div className="text-center mb-8">
-                <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-pink-500 to-purple-600 rounded-2xl mb-4 shadow-2xl transform hover:scale-110 transition-transform duration-300 animate-bounce" style={{ animationDuration: '3s' }}>
-                  <span className="text-5xl">🐷</span>
+              <div className="mb-8 text-center">
+                <div className="inline-flex items-center justify-center w-24 h-24 mb-4 transition-transform duration-300 transform shadow-2xl bg-gradient-to-br from-pink-500 to-purple-600 rounded-2xl hover:scale-110 animate-bounce" style={{ animationDuration: '3s' }}>
+                  <img src={monkey} alt="Monkey" className="w-16 h-16" />
                 </div>
-                <h1 className="text-4xl font-bold text-white mb-2">StudyFlow</h1>
+                <h1 className="mb-2 text-4xl font-bold text-white">Mi Ritual</h1>
                 <p className="text-white opacity-80">Inicia sesión para comenzar</p>
               </div>
 
               {/* Formulario */}
               <form onSubmit={handleSubmit} className="space-y-6">
                 {error && (
-                  <div className="bg-red-500 bg-opacity-30 backdrop-blur border border-red-400 rounded-xl p-4 text-red-100 text-sm animate-wiggle flex items-center gap-3">
+                  <div className="flex items-center gap-3 p-4 text-sm text-red-100 bg-red-500 border border-red-400 bg-opacity-30 backdrop-blur rounded-xl animate-wiggle">
                     <span className="text-2xl">⚠️</span>
                     {error}
                   </div>
@@ -150,7 +153,7 @@ const Login = ({ onLogin }) => {
 
                 {/* Campo Usuario */}
                 <div>
-                  <label className="block text-white mb-2 font-semibold text-sm">Usuario</label>
+                  <label className="block mb-2 text-sm font-semibold text-white">Usuario</label>
                   <div className="relative group">
                     <div className={`absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none transition-colors ${focusedField === 'username' ? 'text-pink-400' : 'text-white opacity-60'}`}>
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -164,7 +167,7 @@ const Login = ({ onLogin }) => {
                       onFocus={() => setFocusedField('username')}
                       onBlur={() => setFocusedField(null)}
                       placeholder="Tu usuario aquí"
-                      className="w-full pl-12 pr-4 py-3 rounded-xl bg-white bg-opacity-10 text-white placeholder-white placeholder-opacity-50 border border-white border-opacity-30 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500 focus:bg-opacity-20 transition-all duration-300 group-hover:bg-opacity-15"
+                      className="w-full py-3 pl-12 pr-4 text-white placeholder-white placeholder-opacity-50 transition-all duration-300 bg-white border border-white rounded-xl bg-opacity-10 border-opacity-30 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500 focus:bg-opacity-20 group-hover:bg-opacity-15"
                       disabled={isLoading}
                     />
                   </div>
@@ -172,7 +175,7 @@ const Login = ({ onLogin }) => {
 
                 {/* Campo Contraseña */}
                 <div>
-                  <label className="block text-white mb-2 font-semibold text-sm">Contraseña</label>
+                  <label className="block mb-2 text-sm font-semibold text-white">Contraseña</label>
                   <div className="relative group">
                     <div className={`absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none transition-colors ${focusedField === 'password' ? 'text-pink-400' : 'text-white opacity-60'}`}>
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -186,13 +189,13 @@ const Login = ({ onLogin }) => {
                       onFocus={() => setFocusedField('password')}
                       onBlur={() => setFocusedField(null)}
                       placeholder="Tu contraseña aquí"
-                      className="w-full pl-12 pr-12 py-3 rounded-xl bg-white bg-opacity-10 text-white placeholder-white placeholder-opacity-50 border border-white border-opacity-30 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500 focus:bg-opacity-20 transition-all duration-300 group-hover:bg-opacity-15"
+                      className="w-full py-3 pl-12 pr-12 text-white placeholder-white placeholder-opacity-50 transition-all duration-300 bg-white border border-white rounded-xl bg-opacity-10 border-opacity-30 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500 focus:bg-opacity-20 group-hover:bg-opacity-15"
                       disabled={isLoading}
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute inset-y-0 right-0 pr-4 flex items-center text-white opacity-60 hover:opacity-100 transition-all transform hover:scale-110"
+                      className="absolute inset-y-0 right-0 flex items-center pr-4 text-white transition-all transform opacity-60 hover:opacity-100 hover:scale-110"
                     >
                       {showPassword ? (
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -212,11 +215,11 @@ const Login = ({ onLogin }) => {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-2xl transform hover:scale-105 active:scale-95 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 group"
+                  className="flex items-center justify-center w-full gap-3 py-4 text-lg font-bold text-white transition-all duration-300 transform shadow-lg bg-gradient-to-r from-pink-500 to-purple-600 rounded-xl hover:shadow-2xl hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed group"
                 >
                   {isLoading ? (
                     <>
-                      <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <svg className="w-5 h-5 text-white animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                       </svg>
@@ -225,15 +228,15 @@ const Login = ({ onLogin }) => {
                   ) : (
                     <>
                       <span>Iniciar Sesión</span>
-                      <span className="text-2xl group-hover:animate-bounce-animal">🐷</span>
+                      <img src={monkey} alt="Monkey" className="w-8 h-8 group-hover:animate-bounce-animal" />
                     </>
                   )}
                 </button>
               </form>
 
               {/* Mensaje motivacional */}
-              <div className="mt-6 pt-6 border-t border-white border-opacity-20">
-                <p className="text-white opacity-60 text-center text-sm">
+              <div className="pt-6 mt-6 border-t border-white border-opacity-20">
+                <p className="text-sm text-center text-white opacity-60">
                   💡 Tip: Usa cualquier usuario y contraseña para probar
                 </p>
               </div>
@@ -265,4 +268,3 @@ const Login = ({ onLogin }) => {
 }
 
 export default Login
-

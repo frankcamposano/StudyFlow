@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-export const BreathingExercise = ({ technique = 'box', duration = 120 }) => {
+export const BreathingExercise = ({ technique = 'box', duration = 120, onComplete }) => {
   const [isActive, setIsActive] = useState(false)
   const [timeLeft, setTimeLeft] = useState(duration)
   const [cycle, setCycle] = useState(0)
@@ -55,6 +55,13 @@ export const BreathingExercise = ({ technique = 'box', duration = 120 }) => {
   const currentPhaseIndex = cycle % allPhases.length
   const currentPhaseData = allPhases[currentPhaseIndex]
 
+  // Reinicia el estado cuando la duración o la técnica cambian desde el padre
+  useEffect(() => {
+    setTimeLeft(duration)
+    setIsActive(false)
+    setCycle(0)
+  }, [duration, technique])
+
   useEffect(() => {
     let interval
     if (isActive && timeLeft > 0) {
@@ -63,9 +70,12 @@ export const BreathingExercise = ({ technique = 'box', duration = 120 }) => {
       }, 1000)
     } else if (timeLeft === 0 && isActive) {
       setIsActive(false)
+      if (onComplete) {
+        onComplete()
+      }
     }
     return () => clearInterval(interval)
-  }, [isActive, timeLeft])
+  }, [isActive, timeLeft, onComplete])
 
   useEffect(() => {
     if (!isActive) return
@@ -88,21 +98,21 @@ export const BreathingExercise = ({ technique = 'box', duration = 120 }) => {
   return (
     <div className="w-full space-y-6">
       {/* Encabezado */}
-      <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-white mb-2">{currentTechnique.name}</h2>
+      <div className="mb-8 text-center">
+        <h2 className="mb-2 text-3xl font-bold text-white">{currentTechnique.name}</h2>
         <p className="text-white opacity-80">{currentTechnique.description}</p>
       </div>
 
       {/* Contenedor Principal */}
-      <div className="bg-gradient-to-br from-purple-700 to-purple-800 rounded-3xl p-12 text-center relative overflow-hidden">
+      <div className="relative p-12 overflow-hidden text-center bg-gradient-to-br from-purple-700 to-purple-800 rounded-3xl">
         {/* Decoración de fondo */}
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-pink-500 to-purple-600 rounded-full blur-3xl"></div>
+          <div className="absolute top-0 right-0 rounded-full w-96 h-96 bg-gradient-to-br from-pink-500 to-purple-600 blur-3xl"></div>
         </div>
 
         <div className="relative z-10 space-y-8">
           {/* Círculo Respiratorio Animado */}
-          <div className="flex justify-center items-center h-64">
+          <div className="flex items-center justify-center h-64">
             <div className="relative w-56 h-56">
               {/* Círculo exterior */}
               <div className={`absolute inset-0 rounded-full border-4 border-white opacity-20`}></div>
@@ -121,10 +131,10 @@ export const BreathingExercise = ({ technique = 'box', duration = 120 }) => {
               {/* Texto central */}
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="text-center">
-                  <div className="text-5xl font-bold text-white mb-2">
+                  <div className="mb-2 text-5xl font-bold text-white">
                     {isActive ? currentPhaseData.duration : '—'}
                   </div>
-                  <div className="text-xl text-white font-semibold">
+                  <div className="text-xl font-semibold text-white">
                     {isActive ? currentPhaseData.label : 'Listo'}
                   </div>
                 </div>
@@ -134,12 +144,12 @@ export const BreathingExercise = ({ technique = 'box', duration = 120 }) => {
 
           {/* Información de tiempo */}
           <div className="space-y-3">
-            <div className="text-white text-lg">
+            <div className="text-lg text-white">
               <span className="text-3xl font-bold">{formatTime(timeLeft)}</span>
-              <span className="text-white opacity-70 ml-2">/ {formatTime(duration)}</span>
+              <span className="ml-2 text-white opacity-70">/ {formatTime(duration)}</span>
             </div>
             {isActive && (
-              <div className="text-white opacity-80 text-sm">
+              <div className="text-sm text-white opacity-80">
                 Ciclo {Math.floor(cycle / allPhases.length) + 1}
               </div>
             )}
@@ -147,7 +157,7 @@ export const BreathingExercise = ({ technique = 'box', duration = 120 }) => {
 
           {/* Barra de progreso de fase */}
           {isActive && (
-            <div className="w-full bg-white bg-opacity-20 rounded-full h-2">
+            <div className="w-full h-2 bg-white rounded-full bg-opacity-20">
               <div
                 className={`h-full rounded-full bg-gradient-to-r ${currentPhaseData.color} transition-all duration-300`}
                 style={{
@@ -158,7 +168,7 @@ export const BreathingExercise = ({ technique = 'box', duration = 120 }) => {
           )}
 
           {/* Botones de Control */}
-          <div className="flex gap-4 justify-center pt-4">
+          <div className="flex justify-center gap-4 pt-4">
             <button
               onClick={() => setIsActive(!isActive)}
               className={`px-8 py-3 rounded-lg font-bold text-lg transition transform hover:scale-105 active:scale-95 ${
@@ -176,7 +186,7 @@ export const BreathingExercise = ({ technique = 'box', duration = 120 }) => {
                 setTimeLeft(duration)
                 setCycle(0)
               }}
-              className="px-8 py-3 rounded-lg font-bold text-lg bg-white text-purple-700 hover:bg-opacity-90 transition transform hover:scale-105 active:scale-95"
+              className="px-8 py-3 text-lg font-bold text-purple-700 transition transform bg-white rounded-lg hover:bg-opacity-90 hover:scale-105 active:scale-95"
             >
               ↻ Reiniciar
             </button>
@@ -185,9 +195,9 @@ export const BreathingExercise = ({ technique = 'box', duration = 120 }) => {
       </div>
 
       {/* Guía de Fases */}
-      <div className="bg-purple-600 bg-opacity-30 rounded-xl p-4">
-        <div className="text-white text-sm font-semibold mb-3">Fases del Ejercicio:</div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+      <div className="p-4 bg-purple-600 bg-opacity-30 rounded-xl">
+        <div className="mb-3 text-sm font-semibold text-white">Fases del Ejercicio:</div>
+        <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
           {allPhases.map((p, idx) => (
             <div
               key={idx}

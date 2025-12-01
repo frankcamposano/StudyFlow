@@ -1,58 +1,32 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
-import { AuthProvider, useAuth } from './context/AuthContext'
-import Layout from './components/Layout'
+import { Outlet } from 'react-router-dom'
+import { ErrorBoundary } from 'react-error-boundary'
+import { AuthProvider } from './context/AuthContext'
 import { NotificationCenter } from './components/NotificationCenter'
-import Login from './pages/Login'
-import Dashboard from './pages/Dashboard'
-import Agenda from './pages/Agenda'
-import Habitos from './pages/Habitos'
-import Logros from './pages/Logros'
-import Respiracion from './pages/Respiracion'
-import Ejercicios from './pages/Ejercicios'
-
-const ProtectedRoute = ({ children }) => {
-  const { user, isLoading } = useAuth()
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-900 via-purple-800 to-purple-900 flex items-center justify-center">
-        <div className="text-center">
-          <div className="text-6xl mb-4 animate-bounce">🐷</div>
-          <p className="text-white text-xl">Cargando...</p>
-        </div>
-      </div>
-    )
-  }
-
-  return user ? children : <Navigate to="/login" replace />
-}
-
-const AppRoutes = () => {
-  const { user, login } = useAuth()
-
-  return (
-    <Routes>
-      <Route path="/login" element={user ? <Navigate to="/" replace /> : <Login onLogin={login} />} />
-      <Route path="/" element={<ProtectedRoute><Layout><Dashboard /></Layout></ProtectedRoute>} />
-      <Route path="/agenda" element={<ProtectedRoute><Layout><Agenda /></Layout></ProtectedRoute>} />
-      <Route path="/habitos" element={<ProtectedRoute><Layout><Habitos /></Layout></ProtectedRoute>} />
-      <Route path="/logros" element={<ProtectedRoute><Layout><Logros /></Layout></ProtectedRoute>} />
-      <Route path="/respiracion" element={<ProtectedRoute><Layout><Respiracion /></Layout></ProtectedRoute>} />
-      <Route path="/ejercicios" element={<ProtectedRoute><Layout><Ejercicios /></Layout></ProtectedRoute>} />
-    </Routes>
-  )
-}
+import { ErrorBoundaryFallback } from './components/ErrorBoundaryFallback'
+import Tour from './components/Tour'
+import { useState } from 'react'
 
 function App() {
+  const [runTour, setRunTour] = useState(false);
+  const [tourSteps, setTourSteps] = useState([]);
+
+  const handleErrorReset = () => {
+    // Esto es útil si el estado del dashboard en sessionStorage causa problemas
+    sessionStorage.removeItem('assistantStep');
+    sessionStorage.removeItem('assistantChoices');
+    sessionStorage.setItem('assistantCompleted', 'false');
+    window.location.reload();
+  };
+
   return (
     <AuthProvider>
-      <Router basename="/StudyFlow/">
-        <AppRoutes />
-        <NotificationCenter />
-      </Router>
+      <ErrorBoundary FallbackComponent={ErrorBoundaryFallback} onReset={handleErrorReset}>
+        <Tour run={runTour} steps={tourSteps} />
+        <Outlet context={{ setRunTour, setTourSteps }} />
+      </ErrorBoundary>
+      <NotificationCenter />
     </AuthProvider>
   )
 }
 
 export default App
-

@@ -1,213 +1,250 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState, useEffect, useCallback } from 'react'
+import { useNavigate, Link } from 'react-router-dom'
+import { motion, AnimatePresence } from 'framer-motion'
+import { LightBulbIcon, SparklesIcon, BookOpenIcon, HeartIcon, FireIcon, ArrowPathIcon } from '@heroicons/react/24/outline'
 import Piggy from '../components/Piggy'
+import Typewriter from '../components/Typewriter'
+import GettingStarted from '../components/GettingStarted'
 
-const Dashboard = () => {
+// --- Componente para el Dashboard Rediseñado (Punto 5) ---
+const FullDashboard = ({ quote, onNewQuote }) => {
   const navigate = useNavigate()
-  const [quote, setQuote] = useState({
-    text: "La única forma de hacer un gran trabajo es amar lo que haces.",
-    author: "Steve Jobs"
-  })
-  const [liked, setLiked] = useState(false)
 
-  const quotes = [
-    { text: "La única forma de hacer un gran trabajo es amar lo que haces.", author: "Steve Jobs" },
-    { text: "El éxito es la suma de pequeños esfuerzos repetidos día tras día.", author: "Robert Collier" },
-    { text: "No cuentes los días, haz que los días cuenten.", author: "Muhammad Ali" },
-  ]
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  }
 
-  const getNewQuote = () => {
-    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)]
-    setQuote(randomQuote)
-    setLiked(false)
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { y: 0, opacity: 1 }
   }
 
   return (
-    <div className="space-y-6 page-transition">
-      {/* Banner de Bienvenida */}
-      <div className="bg-gradient-to-r from-pink-500 to-purple-600 rounded-2xl p-8 flex items-center justify-between hover-lift animate-fade-in-up">
-        <div className="flex-1">
-          <h1 className="text-4xl font-bold text-white mb-2 flex items-center gap-2">
-            Buenos Días, frank!
-            <Piggy size="text-2xl" animation="bounce" delay={200} />
-            <span className="text-2xl">✨</span>
-          </h1>
-          <p className="text-white text-lg mb-6">
-            ¿Listo para conquistar tu día? ¡Hagamos que cuente!
-          </p>
-          <div className="flex gap-4">
-            <button 
-              onClick={() => navigate('/agenda')}
-              className="bg-white text-purple-600 px-6 py-3 rounded-lg font-semibold flex items-center gap-2 hover:bg-opacity-90 transition transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl"
+    <motion.div 
+      className="space-y-6"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
+      {/* Sección de Primeros Pasos */}
+      <GettingStarted />
+
+      {/* Header de Bienvenida */}
+      <motion.div variants={itemVariants}>
+        <h1 className="text-4xl font-bold text-white">¡Bienvenido de vuelta!</h1>
+        <p className="text-lg text-white opacity-70">Es un gran día para ser productivo y cuidarse.</p>
+      </motion.div>
+
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+        {/* Columna Izquierda */}
+        <div className="flex flex-col gap-6 lg:col-span-2">
+          {/* Frase del día */}
+          <motion.div variants={itemVariants} className="relative flex flex-col h-48 p-6 overflow-hidden text-white bg-purple-800 shadow-xl rounded-2xl">
+            <span className="absolute text-[12rem] leading-none font-serif text-white opacity-5 -right-4 -top-8">“</span>
+            <div className="relative z-10 flex items-center justify-between mb-2">
+              <p className="text-sm font-semibold tracking-widest text-pink-400 uppercase">Frase del día</p>
+              <button onClick={onNewQuote} className="p-1 text-purple-300 transition-colors rounded-full hover:bg-white/10">
+                <ArrowPathIcon className="w-5 h-5"/>
+              </button>
+            </div>
+            <div className="relative z-10 flex flex-col justify-center flex-grow">
+              <motion.div whileHover={{ scale: 1.02 }} className="transition-transform">
+                <Typewriter 
+                  key={quote.text}
+                  text={`“${quote.text}”`}
+                  className="flex flex-wrap overflow-hidden text-2xl font-medium text-transparent bg-gradient-to-r from-pink-400 to-yellow-400 bg-clip-text"
+                />
+              </motion.div>
+              <motion.p 
+                key={quote.author}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 1.5 }}
+                className="mt-3 font-semibold text-right text-transparent bg-gradient-to-r from-purple-300 to-pink-300 bg-clip-text"
+                style={{ textShadow: '0 2px 4px rgba(0,0,0,0.2)' }}
+              >
+                — {quote.author}
+              </motion.p>
+            </div>
+          </motion.div>
+
+          {/* Resumen de Hábitos */}
+          <motion.div variants={itemVariants} className="flex items-center gap-6 p-6 text-white bg-orange-500 shadow-xl rounded-2xl">
+            <FireIcon className="w-16 h-16 shrink-0" />
+            <div>
+              <h3 className="text-2xl font-bold">Mantén tu racha</h3>
+              <p className="opacity-80">Recuerda completar tus hábitos de hoy para seguir avanzando.</p>
+            </div>
+            <Link to="/habitos" className="px-4 py-2 ml-auto font-semibold text-orange-500 transition-transform bg-white rounded-lg whitespace-nowrap hover:scale-105">
+              Ver Hábitos
+            </Link>
+          </motion.div>
+        </div>
+
+        {/* Columna Derecha */}
+        <div className="flex flex-col gap-6">
+          {/* Acciones Rápidas */}
+          <motion.div variants={itemVariants} className="p-6 bg-gray-800 shadow-xl rounded-2xl">
+            <h3 className="flex items-center gap-2 mb-4 text-xl font-bold text-white">
+              <SparklesIcon className="w-6 h-6 text-yellow-400" />
+              Acciones Rápidas
+            </h3>
+            <div className="flex flex-col gap-3">
+              <button onClick={() => navigate('/respiracion')} className="flex items-center gap-3 px-4 py-3 text-left text-white transition bg-blue-600 rounded-lg hover:bg-blue-700">
+                <HeartIcon className="w-6 h-6" />
+                <span>Ejercicio de Respiración</span>
+              </button>
+              <button onClick={() => navigate('/diario')} className="flex items-center gap-3 px-4 py-3 text-left text-white transition bg-green-600 rounded-lg hover:bg-green-700">
+                <BookOpenIcon className="w-6 h-6" />
+                <span>Escribir en mi Diario</span>
+              </button>
+            </div>
+          </motion.div>
+
+          {/* Prompt del Diario */}
+          <motion.div variants={itemVariants} className="flex flex-col items-center p-6 text-center text-white bg-purple-800 shadow-xl rounded-2xl">
+            <Piggy size="text-5xl" animation="bounce" />
+            <p className="mt-2 font-semibold">¿Ya registraste tu día?</p>
+            <Link to="/diario" className="px-4 py-2 mt-3 text-sm font-semibold text-purple-800 transition-transform bg-purple-300 rounded-lg hover:scale-105">
+              Ir al Diario
+            </Link>
+          </motion.div>
+        </div>
+      </div>
+    </motion.div>
+  )
+}
+
+// --- Componente del Asistente Interactivo ---
+const InteractiveAssistant = ({ onComplete, quote, onNewQuote }) => {
+  const navigate = useNavigate()
+  const [step, setStep] = useState(() => Number(sessionStorage.getItem('assistantStep')) || 0)
+  const [choices, setChoices] = useState(() => {
+    const savedChoices = sessionStorage.getItem('assistantChoices')
+    return savedChoices ? JSON.parse(savedChoices) : [
+      { key: 'agenda', label: 'Planificar mi día', path: '/agenda', icon: '📅' },
+      { key: 'habitos', label: 'Fortalecer mis hábitos', path: '/habitos', icon: '💪' },
+      { key: 'respiracion', label: 'Momento de calma', path: '/respiracion', icon: '🧘' },
+      { key: 'ejercicios', label: 'Ejercicios para el fisico', path: '/ejercicios', icon: '🏋️' }
+    ]
+  })
+
+  useEffect(() => {
+    sessionStorage.setItem('assistantStep', step)
+    sessionStorage.setItem('assistantChoices', JSON.stringify(choices))
+    if (choices.length === 0) {
+      onComplete()
+    }
+  }, [step, choices, onComplete])
+
+  const handleChoice = (choice) => {
+    setChoices(choices.filter(c => c.key !== choice.key))
+    setStep(prev => prev + 1)
+    navigate(choice.path)
+  }
+
+  const messages = [
+    "¡Buenos días, frank! ¿Listo para empezar? ¿Qué hacemos primero?",
+    "¡Genial! Un paso más cerca de un día exitoso. ¿Cuál es el siguiente?",
+    "¡Excelente elección! ¿Qué sigue en la lista?",
+    "¡Estás imparable! Solo queda uno para empezar el día con todo.",
+  ]
+
+  return (
+    <div className="flex flex-col items-center justify-center h-full text-center page-transition animate-fade-in-up">
+      <Piggy size="text-8xl" animation="bounce" onClick={onNewQuote} />
+      <div className="w-full max-w-lg p-8 mt-6 bg-purple-800 shadow-2xl rounded-2xl">
+        <div className="mb-6 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+          <p className="mb-2 text-xl text-white">"{quote.text}"</p>
+          <p className="text-sm text-white opacity-80">— {quote.author}</p>
+        </div>
+        <p className="mb-6 text-2xl font-semibold text-white">{messages[step] || messages[0]}</p>
+        <div className="flex flex-col gap-4">
+          {choices.map((choice, index) => (
+            <button
+              key={choice.key}
+              onClick={() => handleChoice(choice)}
+              className="flex items-center justify-center gap-4 px-6 py-4 text-lg font-bold text-purple-600 transition transform bg-white rounded-lg shadow-lg hover:bg-opacity-90 hover:scale-105 active:scale-95 animate-fade-in-up"
+              style={{ animationDelay: `${0.4 + index * 0.1}s` }}
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-              Planificar Día
+              <span className="text-2xl">{choice.icon}</span>
+              {choice.label}
             </button>
-            <button 
-              onClick={() => navigate('/habitos')}
-              className="bg-white text-purple-600 px-6 py-3 rounded-lg font-semibold flex items-center gap-2 hover:bg-opacity-90 transition transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-              </svg>
-              Rastrear Hábitos
-            </button>
-          </div>
-        </div>
-        <div className="ml-8 hidden md:block">
-          <div className="w-64 h-64 bg-white rounded-lg overflow-hidden">
-            <img 
-              src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&h=400&fit=crop" 
-              alt="Estudiante trabajando" 
-              className="w-full h-full object-cover"
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Sección de Cita */}
-      <div className="bg-purple-800 rounded-2xl p-6 hover-lift animate-fade-in-up relative" style={{ animationDelay: '0.1s', opacity: 0 }}>
-        <div className="absolute top-4 right-4">
-          <Piggy size="text-xl" animation="pulse" delay={500} />
-        </div>
-        <p className="text-white text-xl mb-2">"{quote.text}"</p>
-        <p className="text-white text-sm opacity-80">— {quote.author}</p>
-        <div className="flex items-center gap-4 mt-4">
-          <button 
-            onClick={getNewQuote}
-            className="text-white flex items-center gap-2 hover:text-pink-300 transition transform hover:scale-110 active:scale-95"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-            </svg>
-            Nueva Frase
-          </button>
-          <button 
-            onClick={() => setLiked(!liked)}
-            className={`text-white transition transform hover:scale-125 active:scale-95 ${liked ? 'text-pink-400 scale-125' : ''}`}
-          >
-            <svg className="w-5 h-5" fill={liked ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-            </svg>
-          </button>
-        </div>
-      </div>
-
-      {/* Tarjetas de Estadísticas */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-green-500 rounded-2xl p-6 text-white hover-lift card-glow animate-scale-in relative" style={{ animationDelay: '0.2s', opacity: 0 }}>
-          <div className="absolute top-2 right-2">
-            <Piggy size="text-lg" animation="float" delay={300} />
-          </div>
-          <div className="flex items-center justify-between mb-4">
-            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
-          </div>
-          <div className="text-5xl font-bold mb-2">0</div>
-          <div className="text-lg">Tareas Completadas</div>
-        </div>
-
-        <div className="bg-orange-500 rounded-2xl p-6 text-white hover-lift card-glow animate-scale-in" style={{ animationDelay: '0.3s', opacity: 0 }}>
-          <div className="flex items-center justify-between mb-4">
-            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-            </svg>
-          </div>
-          <div className="text-5xl font-bold mb-2">0</div>
-          <div className="text-lg">Días en Racha</div>
-        </div>
-
-        <div className="bg-yellow-500 rounded-2xl p-6 text-white hover-lift card-glow animate-scale-in" style={{ animationDelay: '0.4s', opacity: 0 }}>
-          <div className="flex items-center justify-between mb-4">
-            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-            </svg>
-          </div>
-          <div className="text-5xl font-bold mb-2">0</div>
-          <div className="text-lg">Puntos Totales</div>
-        </div>
-
-        <div className="bg-blue-500 rounded-2xl p-6 text-white hover-lift card-glow animate-scale-in" style={{ animationDelay: '0.5s', opacity: 0 }}>
-          <div className="flex items-center justify-between mb-4">
-            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-            </svg>
-          </div>
-          <div className="text-5xl font-bold mb-2">0</div>
-          <div className="text-lg">Hábitos Rastreados</div>
-        </div>
-      </div>
-
-      {/* Tarjetas de Características */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div 
-          onClick={() => navigate('/agenda')}
-          className="bg-purple-600 rounded-2xl p-6 text-white relative overflow-hidden hover-lift card-glow animate-fade-in-up cursor-pointer group transition-all duration-300" 
-          style={{ animationDelay: '0.6s', opacity: 0 }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-pink-500 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          <div className="relative z-10">
-            <div className="flex items-start justify-between mb-4">
-              <svg className="w-8 h-8 transform group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <span className="text-2xl transform group-hover:scale-125 transition-transform duration-300">✨</span>
-            </div>
-            <h3 className="text-2xl font-bold mb-2">Tiempo Muerto</h3>
-            <p className="text-white opacity-90">
-              Optimiza tu horario y descubre momentos ocultos de productividad
-            </p>
-          </div>
-        </div>
-
-        <div 
-          onClick={() => navigate('/habitos')}
-          className="bg-red-500 rounded-2xl p-6 text-white relative overflow-hidden hover-lift card-glow animate-fade-in-up cursor-pointer group transition-all duration-300" 
-          style={{ animationDelay: '0.7s', opacity: 0 }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          <div className="relative z-10">
-            <div className="flex items-start justify-between mb-4">
-              <div className="flex-1"></div>
-              <svg className="w-8 h-8 transform group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-            </div>
-            <h3 className="text-2xl font-bold mb-2">Micro-Hábitos</h3>
-            <p className="text-white opacity-90">
-              Pequeñas acciones diarias que conducen a grandes cambios de vida
-            </p>
-          </div>
-        </div>
-
-        <div 
-          onClick={() => navigate('/logros')}
-          className="bg-blue-500 rounded-2xl p-6 text-white relative overflow-hidden hover-lift card-glow animate-fade-in-up cursor-pointer group transition-all duration-300" 
-          style={{ animationDelay: '0.8s', opacity: 0 }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          <div className="relative z-10">
-            <div className="flex items-start justify-between mb-4">
-              <svg className="w-8 h-8 transform group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-              </svg>
-              <svg className="w-8 h-8 transform group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-              </svg>
-            </div>
-            <h3 className="text-2xl font-bold mb-2">Ver Logros</h3>
-            <p className="text-white opacity-90">
-              Celebra tus victorias y desbloquea nuevas insignias
-            </p>
-          </div>
+          ))}
         </div>
       </div>
     </div>
   )
 }
 
-export default Dashboard
+// --- Componente Principal del Dashboard ---
+const quotes = [
+    { text: "La única forma de hacer un gran trabajo es amar lo que haces.", author: "Steve Jobs" },
+    { text: "El éxito es la suma de pequeños esfuerzos repetidos día tras día.", author: "Robert Collier" },
+    { text: "No cuentes los días, haz que los días cuenten.", author: "Muhammad Ali" },
+    { text: "La vida es 10% lo que me ocurre y 90% cómo reacciono a ello.", author: "Charles R. Swindoll" },
+    { text: "El único lugar donde el éxito viene antes que el trabajo es en el diccionario.", author: "Vidal Sassoon" },
+    { text: "No esperes. El tiempo nunca será justo.", author: "Napoleon Hill" },
+    { text: "El fracaso es simplemente la oportunidad de comenzar de nuevo, esta vez de forma más inteligente.", author: "Henry Ford" },
+    { text: "La motivación nos impulsa a comenzar y el hábito nos permite continuar.", author: "Jim Ryun" },
+    { text: "El secreto del cambio es enfocar toda tu energía no en luchar contra lo viejo, sino en construir lo nuevo.", author: "Sócrates" },
+    { text: "El futuro pertenece a quienes creen en la belleza de sus sueños.", author: "Eleanor Roosevelt" },
+    { text: "La disciplina es el puente entre tus metas y tus logros.", author: "Jim Rohn" },
+]
 
+const Dashboard = () => {
+  const [assistantCompleted, setAssistantCompleted] = useState(true); // Forzar a true para mostrar siempre el dashboard
+  const [quote, setQuote] = useState(quotes[0])
+
+  const handleNewQuote = useCallback(() => {
+    const currentQuoteIndex = quotes.findIndex(q => q.text === quote.text);
+    const nextQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
+    setQuote(quotes[nextQuoteIndex]);
+  }, [quote])
+
+  useEffect(() => {
+    // Selecciona una frase al azar solo una vez al cargar la página
+    setQuote(quotes[Math.floor(Math.random() * quotes.length)])
+  }, [])
+
+  useEffect(() => {
+    sessionStorage.setItem('assistantCompleted', assistantCompleted)
+  }, [assistantCompleted])
+  
+  const handleReset = () => {
+    sessionStorage.removeItem('assistantStep');
+    sessionStorage.removeItem('assistantChoices');
+    sessionStorage.setItem('assistantCompleted', 'false');
+    window.location.reload();
+  }
+
+  const handleComplete = () => {
+    setAssistantCompleted(true)
+  }
+
+  if (!assistantCompleted) {
+    return <InteractiveAssistant onComplete={handleComplete} quote={quote} onNewQuote={handleNewQuote} />
+  }
+
+  return (
+    <div>
+        <FullDashboard quote={quote} onNewQuote={handleNewQuote} />
+        <div className="mt-6 text-center">
+            <button 
+                onClick={handleReset}
+                className="px-4 py-2 text-white transition bg-purple-600 rounded-lg hover:bg-purple-700"
+            >
+                Reiniciar Ritual Diario
+            </button>
+        </div>
+    </div>
+  );
+}
+
+export default Dashboard
