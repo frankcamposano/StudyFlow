@@ -8,6 +8,7 @@ import Logros from './pages/Logros';
 import Respiracion from './pages/Respiracion';
 import Ejercicios from './pages/Ejercicios';
 import Diario from './pages/Diario';
+import Musica from './pages/Musica';
 import Layout from './components/Layout';
 import { AuthProvider, useAuth } from './context/AuthContext';
 
@@ -20,10 +21,10 @@ const ProtectedElement = ({ children }) => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-900 via-purple-800 to-purple-900 flex items-center justify-center">
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-900 via-purple-800 to-purple-900">
         <div className="text-center">
-          <div className="text-6xl mb-4 animate-bounce">🐷</div>
-          <p className="text-white text-xl">Cargando...</p>
+          <div className="mb-4 text-6xl animate-bounce">🐷</div>
+          <p className="text-xl text-white">Cargando...</p>
         </div>
       </div>
     );
@@ -100,6 +101,14 @@ const router = createBrowserRouter(
           element: (
             <ProtectedElement>
               <Diario />
+            </ProtectedElement>
+          ),
+        },
+        {
+          path: 'musica',
+          element: (
+            <ProtectedElement>
+              <Musica />
             </ProtectedElement>
           ),
         },

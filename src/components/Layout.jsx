@@ -9,7 +9,8 @@ import {
   HeartIcon, 
   BookOpenIcon,
   ArrowRightOnRectangleIcon,
-  BoltIcon as LightningBoltIcon
+  BoltIcon as LightningBoltIcon,
+  MusicalNoteIcon
 } from '@heroicons/react/24/outline'
 
 const Layout = ({ children }) => {
@@ -31,6 +32,7 @@ const Layout = ({ children }) => {
     { path: '/logros', label: 'Logros', icon: TrophyIcon, color: 'text-yellow-400' },
     { path: '/respiracion', label: 'Respiración', icon: HeartIcon, color: 'text-sky-400' },
     { path: '/ejercicios', label: 'Ejercicios', icon: LightningBoltIcon, color: 'text-red-400' },
+    { path: '/musica', label: 'Música', icon: MusicalNoteIcon, color: 'text-teal-400' },
   ];
 
   return (
