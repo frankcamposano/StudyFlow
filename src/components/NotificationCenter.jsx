@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
+import { useAuth } from '../context/AuthContext'
 
-export const NotificationCenter = () => {
+export default function NotificationCenter() {
+  const { user } = useAuth()
   const [notifications, setNotifications] = useState([])
   const [isEnabled, setIsEnabled] = useState(true)
   const [showSettings, setShowSettings] = useState(false)
@@ -83,6 +85,12 @@ export const NotificationCenter = () => {
     return () => clearInterval(timer)
   }, [isEnabled])
 
+  useEffect(() => {
+    if (user) {
+      addNotification(`¡Bienvenido de nuevo, ${user}! 😃`, '👋')
+    }
+  }, [user])
+
   const addNotification = (message, icon = '📢') => {
     const id = Date.now()
     setNotifications(prev => [...prev, { id, message, icon }])
@@ -98,95 +106,46 @@ export const NotificationCenter = () => {
   }
 
   return (
-    <>
+    <div>
       {/* Panel de notificaciones */}
-      <div className="fixed z-50 max-w-md space-y-3 bottom-8 right-8">
+      <div className="fixed z-50 flex flex-col items-center w-full max-w-md space-y-3 -translate-x-1/2 top-8 left-1/2">
         {/* Notificaciones activas */}
         {notifications.map(notif => (
           <div
             key={notif.id}
-            className="flex items-center gap-3 p-4 text-white border border-white rounded-lg shadow-2xl bg-gradient-to-r from-pink-500 to-purple-600 animate-slide-in-up border-opacity-20 backdrop-blur"
+            className="flex items-center gap-3 p-4 text-white border border-white shadow-2xl rounded-2xl bg-gradient-to-r from-pink-500 via-purple-500 to-purple-600 animate-slide-in-up border-opacity-20 backdrop-blur-xl"
+            style={{
+              boxShadow: '0 10px 40px rgba(168, 85, 247, 0.4), 0 0 20px rgba(236, 72, 153, 0.3)',
+              animation: 'slideInUp 0.5s ease-out'
+            }}
           >
-            <span className="text-2xl animate-bounce" style={{ animationDuration: '0.5s' }}>{notif.icon}</span>
-            <span className="flex-1 text-sm font-semibold">{notif.message}</span>
+            <div className="flex items-center justify-center w-12 h-12 bg-white rounded-full bg-opacity-20 backdrop-blur-sm">
+              <span className="text-2xl animate-bounce" style={{ animationDuration: '0.5s' }}>{notif.icon}</span>
+            </div>
+            <span className="flex-1 text-sm font-semibold leading-relaxed">{notif.message}</span>
             <button
               onClick={() => removeNotification(notif.id)}
-              className="text-white transition opacity-60 hover:opacity-100"
+              className="flex items-center justify-center w-8 h-8 transition rounded-full bg-white/20 hover:bg-white/30 hover:rotate-90"
             >
               ✕
             </button>
           </div>
         ))}
 
-        {/* Botón de configuración flotante */}
-        <button
-          onClick={() => setShowSettings(!showSettings)}
-          className="flex items-center justify-center w-full gap-2 p-3 font-semibold text-white transition bg-white border border-white rounded-lg bg-opacity-10 backdrop-blur border-opacity-30 hover:bg-opacity-20"
-        >
-          <span className="text-lg">🔔</span>
-          Notificaciones: {isEnabled ? '✓ Activas' : '✗ Inactivas'}
-        </button>
-
-        {/* Panel de configuración */}
-        {showSettings && (
-          <div className="p-4 space-y-4 border border-white rounded-lg bg-gradient-to-br from-purple-700 to-purple-800 backdrop-blur border-opacity-20 animate-slide-in-up">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="font-bold text-white">⚙️ Configuración de Notificaciones</h3>
-              <button
-                onClick={() => setShowSettings(false)}
-                className="text-xl text-white transition hover:opacity-60"
-              >
-                ✕
-              </button>
-            </div>
-
-            {/* Toggle */}
-            <div className="flex items-center justify-between p-3 bg-white rounded-lg bg-opacity-10">
-              <span className="font-semibold text-white">Habilitar notificaciones</span>
-              <button
-                onClick={() => setIsEnabled(!isEnabled)}
-                className={`relative inline-flex h-6 w-11 items-center rounded-full transition ${
-                  isEnabled ? 'bg-green-500' : 'bg-gray-600'
-                }`}
-              >
-                <span
-                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition ${
-                    isEnabled ? 'translate-x-6' : 'translate-x-1'
-                  }`}
-                />
-              </button>
-            </div>
-
-            {/* Notificaciones disponibles */}
-            <div className="space-y-2">
-              <p className="text-sm font-semibold text-white">Notificaciones programadas:</p>
-              <div className="space-y-2 overflow-y-auto max-h-48">
-                {availableNotifications.map(notif => (
-                  <div key={notif.id} className="flex items-center gap-3 p-3 text-sm text-white bg-white rounded-lg bg-opacity-10">
-                    <span className="text-lg">{notif.icon}</span>
-                    <div className="flex-1">
-                      <div className="font-semibold">{notif.time}</div>
-                      <div className="text-xs truncate opacity-70">{notif.message}</div>
-                    </div>
-                    <span className="px-2 py-1 text-xs bg-white rounded bg-opacity-20">{notif.type}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Botón de prueba */}
-            <button
-              onClick={() => {
-                addNotification('¡Esto es una notificación de prueba! 🎉', '✨')
-                setShowSettings(false)
-              }}
-              className="w-full py-2 font-bold text-white transition rounded-lg bg-gradient-to-r from-pink-500 to-purple-600 hover:shadow-lg"
-            >
-              🧪 Probar notificación
-            </button>
-          </div>
-        )}
       </div>
-    </>
+
+      <style jsx>{`
+        @keyframes slideInUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
+    </div>
   )
 }

@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useAuth } from '../context/AuthContext'
 import { LightBulbIcon, SparklesIcon, BookOpenIcon, HeartIcon, FireIcon, ArrowPathIcon } from '@heroicons/react/24/outline'
 import Piggy from '../components/Piggy'
 import Typewriter from '../components/Typewriter'
@@ -9,6 +10,7 @@ import GettingStarted from '../components/GettingStarted'
 // --- Componente para el Dashboard Rediseñado (Punto 5) ---
 const FullDashboard = ({ quote, onNewQuote }) => {
   const navigate = useNavigate()
+  const { user } = useAuth()
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -37,7 +39,9 @@ const FullDashboard = ({ quote, onNewQuote }) => {
 
       {/* Header de Bienvenida */}
       <motion.div variants={itemVariants}>
-        <h1 className="text-4xl font-bold text-white">¡Bienvenido de vuelta!</h1>
+        <h1 className="text-4xl font-bold text-white">
+          ¡Bienvenido de vuelta{user ? `, ${user}` : ''}!
+        </h1>
         <p className="text-lg text-white opacity-70">Es un gran día para ser productivo y cuidarse.</p>
       </motion.div>
 

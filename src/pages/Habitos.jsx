@@ -9,7 +9,7 @@ const Habitos = () => {
   const [habits, setHabits] = useState([
     {
       id: 1,
-      name: 'Drink Water',
+      name: 'Tomar Aguita',
       icon: 'dog',
       goal: 8,
       unit: 'glasses',
@@ -18,7 +18,7 @@ const Habitos = () => {
     },
     {
       id: 2,
-      name: 'Exercise',
+      name: 'Ejercicio',
       icon: 'panda',
       goal: 30,
       unit: 'minutes',
@@ -27,7 +27,7 @@ const Habitos = () => {
     },
     {
       id: 3,
-      name: 'Meditation',
+      name: 'Meditación',
       icon: 'monkey',
       goal: 10,
       unit: 'minutes',
@@ -36,7 +36,7 @@ const Habitos = () => {
     },
     {
       id: 4,
-      name: 'Sleep',
+      name: 'Sueño',
       icon: 'koala',
       goal: 8,
       unit: 'hours',
@@ -110,14 +110,15 @@ const Habitos = () => {
       {/* Header */}
       <motion.div layout className="relative flex items-center justify-between" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
         <div>
-          <h1 className="flex items-center gap-2 mb-2 text-4xl font-bold text-white">
-            Rastreador de Micro-Hábitos
-            <Piggy size="text-2xl" animation="bounce" delay={200} />
-          </h1>
-          <p className="text-white opacity-80">
-            Construye hábitos saludables, un paso a la vez
-          </p>
-        </div>
+    <h1 className="flex items-center gap-3 text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight drop-shadow-lg">
+                <span className="text-4xl sm:text-5xl md:text-6xl animate-pulse">🎯</span>
+                Rastreador de Micro-Hábitos
+      <Piggy size="text-2xl" animation="bounce" delay={200} />
+    </h1>
+    <p className="mt-2 text-lg sm:text-xl text-white font-medium max-w-2xl drop-shadow-md opacity-95">
+                ✨ Construye hábitos saludables, un paso a la vez
+              </p>
+  </div>
         <motion.button 
           onClick={() => setShowAddForm(!showAddForm)}
           className="flex items-center gap-2 px-6 py-3 font-semibold text-white transition-shadow transform bg-pink-500 rounded-lg shadow-lg hover:bg-pink-600 hover-lift hover:scale-105 active:scale-95 hover:shadow-xl"
